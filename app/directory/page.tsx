@@ -2,20 +2,20 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { getDirectoryEntries } from '@/lib/directoryData';
+import { getDirectoryEntries, DirectoryEntry } from '@/lib/directoryData';
 
 function DirectoryContent() {
   const searchParams = useSearchParams();
   const search = searchParams?.get('search')?.toLowerCase() || '';
 
-  // Получаем массив данных с помощью вызова функции
-  const data = getDirectoryEntries();
+  // Получаем записи для переработчиков (можно поменять на "producer" при необходимости)
+  const data: DirectoryEntry[] = getDirectoryEntries('recycler') || [];
 
   const filteredData = data.filter((item) => {
     return (
       item.name.toLowerCase().includes(search) ||
-      item.type.toLowerCase().includes(search) ||
-      item.region.toLowerCase().includes(search)
+      item.city.toLowerCase().includes(search) ||
+      item.materials.some((m) => m.toLowerCase().includes(search))
     );
   });
 
@@ -25,9 +25,21 @@ function DirectoryContent() {
       <div className="grid gap-4">
         {filteredData.map((item) => (
           <div key={item.id} className="p-4 border rounded-lg shadow-sm bg-card">
-            <h2 className="text-xl font-semibold">{item.name}</h2>
-            <p className="text-muted-foreground">{item.type}</p>
-            <p className="text-sm mt-2">{item.region}</p>
+            <div className="flex justify-between items-start">
+              <div>
+                <h2 className="text-xl font-semibold">
+                  {item.name} {item.verified && '✅'}
+                </h2>
+                <p className="text-muted-foreground">Город: {item.city}</p>
+                <p className="text-sm mt-2 text-blue-500">
+                  Материалы: {item.materials.join(', ')}
+                </p>
+              </div>
+              <div className="text-right text-sm text-muted-foreground">
+                <p>{item.distanceKm} км</p>
+                <p>{item.quantityT} т</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
