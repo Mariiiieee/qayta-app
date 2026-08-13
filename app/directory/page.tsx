@@ -2,13 +2,16 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { directoryData } from '@/lib/directoryData';
+import { getDirectoryEntries } from '@/lib/directoryData';
 
 function DirectoryContent() {
   const searchParams = useSearchParams();
   const search = searchParams?.get('search')?.toLowerCase() || '';
 
-  const filteredData = directoryData.filter((item) => {
+  // Получаем массив данных с помощью вызова функции
+  const data = getDirectoryEntries();
+
+  const filteredData = data.filter((item) => {
     return (
       item.name.toLowerCase().includes(search) ||
       item.type.toLowerCase().includes(search) ||
