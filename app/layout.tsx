@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { LanguageProvider } from "@/lib/i18n";
+import { AppShell } from "@/components/ui/AppShell";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -33,7 +34,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               "try{document.documentElement.setAttribute('data-theme',localStorage.getItem('qayta-theme')==='dark'?'dark':'light')}catch(e){}",
           }}
         />
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <AppShell>{children}</AppShell>
+        </LanguageProvider>
       </body>
     </html>
   );

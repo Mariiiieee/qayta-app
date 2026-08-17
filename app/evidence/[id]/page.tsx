@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Sidebar } from "@/components/ui/Sidebar";
 import { getEvidenceById, statusLabel, type EvidenceStatus } from "@/lib/evidenceData";
 
 function BackIcon() {
@@ -28,18 +27,15 @@ export default function EvidenceDetailPage() {
 
   if (!evidence) {
     return (
-      <div className="flex h-full min-h-screen">
-        <Sidebar role="producer" userName="Aziz" companyName="Tashkent Plast MChJ" />
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 bg-paper px-6">
-          <p className="text-body text-ink-600">Yuk topilmadi.</p>
-          <button
-            type="button"
-            onClick={() => router.push("/evidence")}
-            className="flex h-12 items-center justify-center rounded-md border border-rule bg-card px-4 text-body font-medium text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-text"
-          >
-            Dalillarga qaytish
-          </button>
-        </div>
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 bg-paper px-6">
+        <p className="text-body text-ink-600">Yuk topilmadi.</p>
+        <button
+          type="button"
+          onClick={() => router.push("/evidence")}
+          className="flex h-12 items-center justify-center rounded-md border border-rule bg-card px-4 text-body font-medium text-ink-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-text"
+        >
+          Dalillarga qaytish
+        </button>
       </div>
     );
   }
@@ -48,10 +44,7 @@ export default function EvidenceDetailPage() {
   const canReport = evidence.status === "pending" || evidence.status === "rejected";
 
   return (
-    <div className="flex h-full min-h-screen">
-      <Sidebar role="recycler" userName="Aziz" companyName="Tashkent Plast MChJ" />
-
-      <div className="flex flex-1 flex-col bg-paper">
+    <>
         <header className="flex items-center gap-3 border-b border-rule-soft bg-paper px-6 py-4">
           <button
             type="button"
@@ -151,7 +144,6 @@ export default function EvidenceDetailPage() {
             )}
           </div>
         </main>
-      </div>
 
       {lightboxOpen && (
         <div
@@ -169,6 +161,6 @@ export default function EvidenceDetailPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

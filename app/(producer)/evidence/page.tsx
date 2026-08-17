@@ -232,7 +232,7 @@ function EvidenceListInner() {
                 {groups.map((group) =>
                   group.rows.length === 0 ? null : (
                     <div key={group.date} className="flex flex-col">
-                      <div className="sticky top-[122px] z-[5] bg-paper px-1 py-2 text-[13px] font-medium uppercase tracking-wide text-ink-500">
+                      <div className="sticky top-0 z-[5] bg-paper px-1 py-2 text-[13px] font-medium uppercase tracking-wide text-ink-500">
                         {formatGroupDate(group.date)}
                       </div>
                       <div className="overflow-hidden rounded-md border border-rule-soft bg-card">

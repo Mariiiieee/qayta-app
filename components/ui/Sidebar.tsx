@@ -156,7 +156,12 @@ export function Sidebar({
   const items =
     role === "recycler" && orgRole === "gate_operator" ? GATE_OPERATOR_NAV : NAV_BY_ROLE[role];
   const matches = items
-    .map((item, idx) => ({ idx, len: pathname.startsWith(item.href) ? item.href.length : -1 }))
+    .map((item, idx) => {
+      // item.href may carry a query string (e.g. "/directory?role=recycler") for
+      // navigation, but usePathname() never includes one — match on the path only.
+      const hrefPath = item.href.split("?")[0];
+      return { idx, len: pathname.startsWith(hrefPath) ? hrefPath.length : -1 };
+    })
     .filter((m) => m.len >= 0)
     .sort((a, b) => b.len - a.len);
   const activeIndex = matches.length > 0 ? matches[0].idx : -1;
